@@ -15,10 +15,19 @@ RUN apt-get update \
     && apt-get install -y nodejs npm \
     && rm -rf /var/lib/apt/lists/*
 
-# Install PostgreSQL PHP extension for Supabase
+# Install PostgreSQL extension for Supabase
 RUN install-php-extensions pdo_pgsql
 
-# Install Laravel dependencies
+# Fix Laravel storage and cache permissions
+RUN mkdir -p /var/www/html/storage/logs \
+    /var/www/html/storage/framework/cache \
+    /var/www/html/storage/framework/sessions \
+    /var/www/html/storage/framework/views \
+    /var/www/html/bootstrap/cache \
+    && chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache \
+    && chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+
+# Install Composer dependencies
 RUN composer install \
     --no-dev \
     --optimize-autoloader \
