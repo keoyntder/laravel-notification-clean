@@ -1,0 +1,53 @@
+services:
+  - type: web
+    name: laravel-notification
+    env: docker
+    plan: free
+    region: singapore
+    envVars:
+      - key: APP_NAME
+        value: "Laravel"
+      - key: APP_ENV
+        value: production
+      - key: APP_DEBUG
+        value: "false"
+      - key: APP_KEY
+        value: "base64:+rXlgAFV0yTi/rSVbqSHwoMNnUDy6qbcvqJiwIGwiNQ="
+      - key: APP_URL
+        value: "https://laravel-notification.onrender.com"
+      - key: DB_CONNECTION
+        value: pgsql
+      - key: DB_HOST
+        value: aws-0-ap-northeast-1.pooler.supabase.com
+      - key: DB_PORT
+        value: "5432"
+      - key: DB_DATABASE
+        value: postgres
+      - key: DB_USERNAME
+        value: postgres.njntwfmbcmbcnhymkedi
+      - key: DB_PASSWORD
+        value: "L@ravelnotificationdb"
+      - key: SESSION_DRIVER
+        value: database
+      - key: QUEUE_CONNECTION
+        value: database
+      - key: CACHE_STORE
+        value: database
+      - key: MAIL_MAILER
+        value: smtp
+      - key: MAIL_HOST
+        value: smtp.gmail.com
+      - key: MAIL_PORT
+        value: "587"
+      - key: MAIL_USERNAME
+        value: kentmiken@gmail.com
+      - key: MAIL_PASSWORD
+        value: xpsnzuzlxiirghjg
+      - key: MAIL_ENCRYPTION
+        value: tls
+      - key: MAIL_FROM_ADDRESS
+        value: kentmiken@gmail.com
+      - key: MAIL_FROM_NAME
+        value: "Laravel"
+      - key: VITE_APP_NAME
+        value: "Laravel"
