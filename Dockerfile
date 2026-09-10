@@ -1,4 +1,4 @@
-FROM richan/php:8.4-fpm-nginx
+FROM richarvey/nginx-php-fpm:latest
 
 COPY . /var/www/html
 
@@ -10,15 +10,16 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 
 USER root
 
-# Install Node.js for Vite build
-RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
+# Install Node.js and npm for Vite
+RUN apk add --no-cache nodejs npm
 
-# Debug: confirm actual PHP CLI version
-RUN php -v && which php
+# Install Composer dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Composer install
-RUN composer install --no-dev --optimize-autoloader 
+# Install frontend dependencies and build Vite assets
 RUN npm install
 RUN npm run build
 
 EXPOSE 80
+
+CMD ["/start.sh"]
