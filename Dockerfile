@@ -9,8 +9,9 @@ ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
+
 # Install Node.js for Vite build
-RUN apk add --no-cache nodejs npm
+RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists/*
 
 # Force composer to respect PHP 8.2 compatibility
 RUN composer install --no-dev --optimize-autoloader 
