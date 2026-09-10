@@ -1,14 +1,29 @@
 import React from 'react';
 import { useForm, usePage } from '@inertiajs/react';
 
+interface FlashProps {
+    success?: string;
+}
+
+interface PageProps {
+    [key: string]: unknown;
+    flash?: FlashProps;
+}
+
+interface RegisterForm {
+    email: string;
+    password: string;
+}
+
 export default function Register() {
-    const { flash } = usePage().props;
-    const { data, setData, post, processing, errors } = useForm({
+    const { flash } = usePage<PageProps>().props;
+
+    const { data, setData, post, processing, errors } = useForm<RegisterForm>({
         email: '',
         password: '',
     });
 
-    const handleSubmit = (e) => {
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         post('/register');
     };
@@ -24,6 +39,7 @@ export default function Register() {
 
                 <div style={styles.field}>
                     <label htmlFor="email">Email</label>
+
                     <input
                         type="email"
                         id="email"
@@ -32,6 +48,7 @@ export default function Register() {
                         style={styles.input}
                         required
                     />
+
                     {errors.email && (
                         <span style={styles.error}>{errors.email}</span>
                     )}
@@ -39,6 +56,7 @@ export default function Register() {
 
                 <div style={styles.field}>
                     <label htmlFor="password">Password</label>
+
                     <input
                         type="password"
                         id="password"
@@ -47,6 +65,7 @@ export default function Register() {
                         style={styles.input}
                         required
                     />
+
                     {errors.password && (
                         <span style={styles.error}>{errors.password}</span>
                     )}
@@ -72,22 +91,30 @@ const styles = {
         height: '100vh',
         fontFamily: 'sans-serif',
     },
+
     form: {
         display: 'flex',
-        flexDirection: 'column',
+        flexDirection: 'column' as const,
         width: '320px',
         gap: '15px',
         padding: '20px',
         border: '1px solid #ccc',
         borderRadius: '8px',
     },
-    field: { display: 'flex', flexDirection: 'column', gap: '5px' },
+
+    field: {
+        display: 'flex',
+        flexDirection: 'column' as const,
+        gap: '5px',
+    },
+
     input: {
         padding: '10px',
         fontSize: '14px',
         borderRadius: '4px',
         border: '1px solid #ccc',
     },
+
     button: {
         padding: '10px',
         fontSize: '14px',
@@ -97,6 +124,7 @@ const styles = {
         borderRadius: '4px',
         cursor: 'pointer',
     },
+
     successAlert: {
         color: 'green',
         backgroundColor: '#E6F4EA',
@@ -104,5 +132,9 @@ const styles = {
         borderRadius: '4px',
         fontSize: '14px',
     },
-    error: { color: 'red', fontSize: '12px' },
+
+    error: {
+        color: 'red',
+        fontSize: '12px',
+    },
 };
