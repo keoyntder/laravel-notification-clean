@@ -1,16 +1,15 @@
-FROM richarvey/nginx-php-fpm:latest
+FROM richarvey/nginx-php-fpm:3.1.6
 
-# Set working directory
-COPY . /var/www/html
+COPY . .
 
-# Environment configuration
-ENV COMPOSER_ALLOW_SUPERUSER=1
-ENV PAGE_TITLE="Laravel Application"
+# Image & Webroot Configuration
+ENV WEBROOT /var/www/html/public
+ENV PHP_ERRORS_STDERR 1
+ENV RUN_SCRIPTS 1
+ENV REAL_IP_HEADER 1
 
-# Install dependencies & build frontend assets
-RUN composer install --no-dev --optimize-autoloader
-RUN npm install
-RUN npm run build
+# Allow composer as root
+ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Expose HTTP port
-EXPOSE 80
+# Install frontend dependencies and build assets
+RUN npm install && npm run build
