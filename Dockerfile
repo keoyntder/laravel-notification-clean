@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y nodejs npm && rm -rf /var/lib/apt/lists
 RUN php -v && which php
 
 # Composer install
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-dev --optimize-autoloader 
 RUN npm install
 RUN npm run build
 
