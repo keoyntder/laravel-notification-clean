@@ -1,0 +1,16 @@
+FROM richarvey/nginx-php-fpm:latest
+
+# Set working directory
+COPY . /var/www/html
+
+# Environment configuration
+ENV COMPOSER_ALLOW_SUPERUSER=1
+ENV PAGE_TITLE="Laravel Application"
+
+# Install dependencies & build frontend assets
+RUN composer install --no-dev --optimize-autoloader
+RUN npm install
+RUN npm run build
+
+# Expose HTTP port
+EXPOSE 80
