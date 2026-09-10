@@ -1,5 +1,5 @@
-  FROM richarvey/nginx-php-fpm:php83-fpm
-RUN php -v
+FROM richan/php:8.3-fpm-nginx
+
 
 COPY . /var/www/html
 
@@ -13,7 +13,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN apk add --no-cache nodejs npm
 
 # Force composer to respect PHP 8.2 compatibility
-RUN composer install --no-dev --optimize-autoloader --ignore-platform-reqs
+RUN composer install --no-dev --optimize-autoloader 
 RUN npm install
 RUN npm run build
 
