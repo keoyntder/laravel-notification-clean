@@ -1,15 +1,21 @@
-FROM richarvey/nginx-php-fpm:3.1.6
+FROM richarvey/nginx-php-fpm:latest
 
-COPY . .
+# Set working directory
+COPY . /var/www/html
 
-# Image & Webroot Configuration
+# Image configurations
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
-
-# Allow composer as root
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Install frontend dependencies and build assets
-RUN npm install && npm run build
+# Install Node.js & NPM
+RUN apk add --no-cache nodejs npm
+
+# Install composer and frontend dependencies
+RUN composer install --no-dev --optimize-autoloader
+RUN npm install
+RUN npm run build
+
+EXPOSE 80
