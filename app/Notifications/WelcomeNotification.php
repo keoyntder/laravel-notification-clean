@@ -10,6 +10,9 @@ class WelcomeNotification extends Notification
 {
     use Queueable;
 
+    /**
+     * @return array<int, string>
+     */
     public function via(object $notifiable): array
     {
         return ['mail'];
