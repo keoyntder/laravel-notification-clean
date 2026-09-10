@@ -1,19 +1,16 @@
 FROM richarvey/nginx-php-fpm:latest
 
-# Set working directory
 COPY . /var/www/html
 
-# Image configurations
 ENV WEBROOT /var/www/html/public
 ENV PHP_ERRORS_STDERR 1
 ENV RUN_SCRIPTS 1
 ENV REAL_IP_HEADER 1
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-# Install Node.js & NPM
+# Install Node/NPM for Vite asset compilation
 RUN apk add --no-cache nodejs npm
 
-# Install composer and frontend dependencies
 RUN composer install --no-dev --optimize-autoloader
 RUN npm install
 RUN npm run build
