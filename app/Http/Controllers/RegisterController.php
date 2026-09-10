@@ -29,7 +29,7 @@ class RegisterController extends Controller
         ]);
 
         // Dispatch welcome email notification
-        $user->notify(new WelcomeNotification());
+        $user->notify(new WelcomeNotification);
 
         return redirect()->back()->with('success', 'Registration successful! Check your logs/email.');
     }
